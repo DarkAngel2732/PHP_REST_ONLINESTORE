@@ -1,39 +1,39 @@
 <?php
 class Login {
-    //Database
+    // Database
     private $conn;
     private $table = 'logins';
 
-    //login properties
+    // login properties
 
     public $id;
     public $username;
     public $password;
     public $created_at;
 
-    //Constructor with Database
+    // Constructor with Database
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    //Get Logins
+    // Get Logins
     public function read() {
-        //Create Query
-        $query = 'SELECT
-            l.id,
-            l.username,
-            l.password,
-            l.created_at
+        // Create Query
+        $query = 'SELECT 
+            id,
+            username,
+            password,
+            created_at
         FROM
-            ' . $this->table . ' l
+             ' . $this->table . ' 
         ORDER BY
-            l.id DESC';
+            id DESC';
 
         // Prepare statement
         $stmt = $this->conn->prepare($query);
 
         // Execute query
-        $stmt->exceute();
+        $stmt->execute();
 
         return $stmt;
     }

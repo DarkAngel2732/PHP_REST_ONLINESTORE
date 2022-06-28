@@ -16,7 +16,7 @@
     // Login query
     $result = $login->read();
     // Get Row Count
-    $num - $result->rowCount();
+    $num = $result->rowCount();
 
     // Check if there is any login information
     if($num > 0){
@@ -39,13 +39,10 @@
         }
 
         //Turn to JSON
-        echo json_encode($posts_arr);
-    }
-    /*
-    else(
+        echo json_encode($login_arr);
+    } else{
         //No Login Information
         echo json_encode(
-            array('message' = "No login information")
+            array('message' => 'No login information')
         );
-    )
-    */
+    }
