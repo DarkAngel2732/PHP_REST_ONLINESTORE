@@ -4,7 +4,7 @@ class Product {
     private $conn;
     private $table = 'products';
 
-    // login properties
+    // Product properties
 
     public $id;
     public $product_name;
@@ -18,7 +18,7 @@ class Product {
         $this->conn = $db;
     }
 
-    // Get Logins
+    // Get Products
     public function read() {
         // Create Query
         $query = 'SELECT 
