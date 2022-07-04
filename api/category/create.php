@@ -6,42 +6,42 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
     include_once '../../config/Database.php';
-    include_once '../../models/Login.php';
+    include_once '../../models/Category.php';
 
     // Instantiate Database & Connect
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate sign in object
-    $login = new Login($db);
+    // Instantiate category object
+    $category = new Category($db);
 
-    // Login query to fetch row count
-    $result = $login->read();
+    // Category query to fetch row count
+    $result = $category->read();
     // Get Row Count
     $num = $result->rowCount();
 
-    // Checkd if table is at 30 row limit
-    if($num < 30){
+    // Checkd if table is at 10 row limit
+    if($num < 10){
 
         // Get raw posted data
         $data = json_decode(file_get_contents("php://input"));
 
-        $login->username = $data->username;
-        $login->password = $data->password;
+        $category->category_name = $data->category_name;
+        $category->category_description = $data->category_description;
+        $category->category_code = $data->category_code;
 
-
-        // Create login
-        if($login->create()){
+        // Create category
+        if($category->create()){
             echo json_encode(
-                array('message' => 'login Created')
+                array('message' => 'category Created')
             );
         }else{
             echo json_encode(
-                array('message' => 'Login not created')
+                array('message' => 'category not created')
             );
         }
     }else{
         echo json_encode(
-            array('message' => 'Login not created, 30 row limit reached')
+            array('message' => 'category not created, 10 row limit reached')
         );
     }

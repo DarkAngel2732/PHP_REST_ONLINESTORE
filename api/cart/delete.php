@@ -2,36 +2,33 @@
     // Headers
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
-    header('Access-Control-Allow-Methods: PUT');
+    header('Access-Control-Allow-Methods: DELETE');
     header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
     include_once '../../config/Database.php';
-    include_once '../../models/Login.php';
+    include_once '../../models/Cart.php';
 
     // Instantiate Database & Connect
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate sign in object
-    $login = new Login($db);
+    // Instantiate Cart object
+    $cart = new Cart($db);
 
     // Get raw posted data
     $data = json_decode(file_get_contents("php://input"));
 
-    // Set ID to update
-    $login->id = $data->id;
+    // Set ID to delete
+    $cart->id = $data->id;
 
-    $login->username = $data->username;
-    $login->password = $data->password;
-
-    // Update login
-
-    if($login->update()){
+    // Delete cart item
+    if($cart->delete()){
         echo json_encode(
-            array('message' => 'login Updated')
+            array('message' => 'Cart item Deleted')
         );
     }else{
         echo json_encode(
-            array('messafe' => 'Login not Updated')
+            array('messafe' => 'Cart item not Deleted')
         );
     }
+    

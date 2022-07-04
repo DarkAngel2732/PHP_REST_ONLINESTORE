@@ -6,32 +6,33 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
     include_once '../../config/Database.php';
-    include_once '../../models/Login.php';
+    include_once '../../models/Category.php';
 
     // Instantiate Database & Connect
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate sign in object
-    $login = new Login($db);
+    // Instantiate category object
+    $category = new Category($db);
 
     // Get raw posted data
     $data = json_decode(file_get_contents("php://input"));
 
     // Set ID to update
-    $login->id = $data->id;
+    $category->id = $data->id;
 
-    $login->username = $data->username;
-    $login->password = $data->password;
+    $category->category_name = $data->category_name;
+    $category->category_description = $data->category_description;
+    $category->category_code = $data->category_code;
 
-    // Update login
+    // Update Category
 
-    if($login->update()){
+    if($category->update()){
         echo json_encode(
-            array('message' => 'login Updated')
+            array('message' => 'Category Updated')
         );
     }else{
         echo json_encode(
-            array('messafe' => 'Login not Updated')
+            array('messafe' => 'Category not Updated')
         );
     }

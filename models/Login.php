@@ -103,4 +103,29 @@ class Login {
             return false;
         }
     }
+
+    // Delete Login
+    public function delete(){
+        // Create Query
+        $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+
+        // Prepare statement
+        $stmt = $this->conn->prepare($query);
+
+        // Sanitise Data
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        //Bind data
+        $stmt->bindParam(':id', $this->id);
+
+        // Execute query
+        if($stmt->execute()){
+            return true;
+        }else{
+            // Print error if something goes wrong
+            printf("Error: %s.\n", $stmt->error);
+
+            return false;
+        }
+    }
 }

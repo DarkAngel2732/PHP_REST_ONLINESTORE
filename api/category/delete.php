@@ -2,36 +2,33 @@
     // Headers
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
-    header('Access-Control-Allow-Methods: PUT');
+    header('Access-Control-Allow-Methods: DELETE');
     header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
     include_once '../../config/Database.php';
-    include_once '../../models/Login.php';
+    include_once '../../models/Category.php';
 
     // Instantiate Database & Connect
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate sign in object
-    $login = new Login($db);
+    // Instantiate Category object
+    $category = new Category($db);
 
     // Get raw posted data
     $data = json_decode(file_get_contents("php://input"));
 
-    // Set ID to update
-    $login->id = $data->id;
+    // Set ID to delete
+    $category->id = $data->id;
 
-    $login->username = $data->username;
-    $login->password = $data->password;
-
-    // Update login
-
-    if($login->update()){
+    // Delete Category
+    if($category->delete()){
         echo json_encode(
-            array('message' => 'login Updated')
+            array('message' => 'Category item Deleted')
         );
     }else{
         echo json_encode(
-            array('messafe' => 'Login not Updated')
+            array('messafe' => 'Category item not Deleted')
         );
     }
+    
