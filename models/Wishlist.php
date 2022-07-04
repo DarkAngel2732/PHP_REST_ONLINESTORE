@@ -1,37 +1,33 @@
 <?php
-class Product {
+class Wishlist {
     // Database
     private $conn;
-    private $table = 'products';
+    private $table = 'wishlist';
 
-    // Product properties
+    // Wishlist properties
 
     public $id;
+    public $product_id;
     public $product_name;
-    public $product_description;
-    public $product_price;
-    public $product_imageid;
-    public $category_name;
+    public $added_at;
 
     // Constructor with Database
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    // Get Products
+    // Get Items in Wishlist
     public function read() {
         // Create Query
         $query = 'SELECT 
-            c.category_name,
-            p.id,
+            w.id,
+            w.product_id,
             p.product_name,
-            p.product_description,
-            p.product_price,
-            p.product_imageid
+            w.added_at
         FROM
-             ' . $this->table . ' p
+             ' . $this->table . ' w
         LEFT JOIN
-            categories c ON p.product_category_code = c.category_code
+            products p ON w.product_id = p.id
         ORDER BY
             id DESC';
 

@@ -1,37 +1,33 @@
 <?php
-class Product {
+class Cart {
     // Database
     private $conn;
-    private $table = 'products';
+    private $table = 'carts';
 
-    // Product properties
+    // Cart properties
 
     public $id;
+    public $product_id;
     public $product_name;
-    public $product_description;
-    public $product_price;
-    public $product_imageid;
-    public $category_name;
+    public $added_at;
 
     // Constructor with Database
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    // Get Products
+    // Get Items in cart
     public function read() {
         // Create Query
         $query = 'SELECT 
-            c.category_name,
-            p.id,
+            c.id,
+            c.product_id,
             p.product_name,
-            p.product_description,
-            p.product_price,
-            p.product_imageid
+            c.added_at
         FROM
-             ' . $this->table . ' p
+             ' . $this->table . ' c
         LEFT JOIN
-            categories c ON p.product_category_code = c.category_code
+            products p ON c.product_id = p.id
         ORDER BY
             id DESC';
 

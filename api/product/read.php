@@ -10,7 +10,7 @@
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate sign in object
+    // Instantiate Product object
     $product = new Product($db);
 
     // product query

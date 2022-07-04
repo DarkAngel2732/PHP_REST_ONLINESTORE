@@ -15,20 +15,33 @@
     // Instantiate sign in object
     $login = new Login($db);
 
-    // Get raw posted data
-    $data = json_decode(file_get_contents("php://input"));
+    // Login query to fetch row count
+    $result = $login->read();
+    // Get Row Count
+    $num = $result->rowCount();
 
-    $login->username = $data->username;
-    $login->password = $data->password;
+    // Checkd if table is at 30 row limit
+    if($num < 30){
 
-    //Create post
+        // Get raw posted data
+        $data = json_decode(file_get_contents("php://input"));
 
-    if($login->create()){
-        echo json_encode(
-            array('message' => 'login Created')
-        );
+        $login->username = $data->username;
+        $login->password = $data->password;
+
+
+        // Create post
+        if($login->create()){
+            echo json_encode(
+                array('message' => 'login Created')
+            );
+        }else{
+            echo json_encode(
+                array('message' => 'Login not created')
+            );
+        }
     }else{
         echo json_encode(
-            array('messafe' => 'Login not created')
+            array('message' => 'Login not created, 30 row limit reached')
         );
     }
