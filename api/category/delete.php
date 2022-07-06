@@ -24,11 +24,11 @@
     // Delete Category
     if($category->delete()){
         echo json_encode(
-            array('message' => 'Category item Deleted')
+            array('message' => 'Category Deleted')
         );
     }else{
         echo json_encode(
-            array('messafe' => 'Category item not Deleted')
+            array('message' => 'Category not Deleted')
         );
     }
     
